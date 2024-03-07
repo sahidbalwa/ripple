@@ -1,0 +1,20 @@
+<% include ./partials/header.ejs %>
+    <div class="w-full h-full bg-stone-950 text-white py-5 ">
+        <div class="flex justify-between items-center px-4">
+            <a class="text-sm text-purple-700" href="/profile"><i class="ri-arrow-left-s-line "></i> profile</a>
+            <h2 class="leading-none text-sm">Upload Post</h2>
+            <a class="text-sm" href="/feed"><i class="ri-home-line"></i> home</a>
+          </div>
+       
+        <div class="list-none h-dvh  bg-stone-950 w-full text-center text-2xl flex-col justify-center items-center py-44">
+            <a href="/features"><li class="py-5 border order-white hover:italic hover:text-purple-700">Features</li></a>
+            <a href="/tandc"><li class="py-5 border order-white hover:italic hover:text-purple-700">Trearms & Conditons</li></a>
+            <a href=""><li class="py-5 border order-white hover:italic hover:text-purple-700">Theme</li></a>
+            <li class="py-5 border order-white hover:italic hover:text-purple-700">About-Us</li>
+            <a href="/logout"><li class="py-5 border order-white hover:italic hover:text-purple-700">Logout</li></a>
+            <li class="py-5 border order-white flex-auto gap-4 text-purple-700"><h3 class="text-white hover:italic hover:text-purple-700">Saved Post</h3> [<%= user.saved.length %>]</li>
+            <!-- <a href="/admin"><li class="py-5 border order-white hover:italic hover:text-purple-700">Admin</li></a> -->
+
+        </div>
+    </div>
+    <% include ./partials/footer.ejs %>

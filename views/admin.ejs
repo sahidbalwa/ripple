@@ -1,0 +1,119 @@
+<% include ./partials/header.ejs %>
+    <style>
+        .admin-panel {
+            height: 100vh;
+            width: 100%;
+            background-color: rgb(8, 3, 87);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .main {
+            height: auto;
+            width: 90%;
+            padding: 100px;
+            background-color: rgba(255, 222, 173, 0.874);
+            backdrop-filter: blur(10px);
+            border-radius: 30px;
+        }
+
+        .h1 {
+            color: navajowhite;
+            font-size: 100px;
+            font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+        }
+
+        table {
+            font-family: arial, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        td,
+        th {
+            border: 5px solid #dddddd;
+            text-align: left;
+            padding: 8px;
+
+        }
+
+        /* tr:nth-child(even) {
+            background-color: #dddddd;
+        } */
+        .header {
+            background-color: black;
+            color: white;
+
+        }
+    </style>
+    <div class="admin-panel">
+        <div class="h1">
+            <h1>Admin Panel</h1>
+        </div>
+        <div class="main">
+            <% admin.reverse().forEach(function(admin){ %>
+                <table>
+                    <tr class="header">
+                        <th>UserName</th>
+                        <th>Name</th>
+                        <th>Total Posts</th>
+                        <th> Delete</th>
+                    </tr>
+                    <tr>
+
+                        <td>
+                            <%= admin.user.username %>
+                        </td>
+                        <td>
+                            <%= admin.user.name %>
+                        </td>
+                        <td>
+                            <%= admin.user.posts.length %>
+                        </td>
+                        <td>
+                            <!-- <i class="ri-delete-bin-5-fill delete-icon text-red-500"
+                                data-userid="<%=user._id %>">Delete</i> -->
+                            <form action="/delete/<%= admin._id %>" method="POST">
+                                <button type="submit" class="delete-icon text-red-500" data-userid="<%= admin._id %>">
+                                    <i class="ri-delete-bin-5-fill"></i> Delete
+                                </button>
+                            </form>
+                        </td>
+
+                    </tr>
+                </table>
+                <% }) %>
+        </div>
+    </div>
+    <script>
+        document.querySelectorAll('.delete-icon').forEach(icon => {
+            icon.addEventListener('click', async () => {
+                const userId = icon.getAttribute('data-userid');
+                if (!userId) {
+                    console.error("User ID is missing");
+                    return;
+                }
+                if (confirm("Are you sure you want to delete this User?")) {
+                    try {
+                        const response = await fetch(`/delete/${userId}`, {
+                            method: 'DELETE',
+                            headers: {
+                                'Content-Type': 'application/json'
+                            },
+                        });
+                        if (response.ok) {
+                            // Reload the page or update the UI as needed
+                            window.location.reload();
+                        } else {
+                            console.error("Failed to delete User");
+                        }
+                    } catch (err) {
+                        console.error(err);
+                    }
+                }
+            });
+        });
+    </script>
+    <% include ./partials/footer.ejs %>

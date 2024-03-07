@@ -1,0 +1,620 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ripple</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.css">
+    <!-- <link rel="stylesheet" href="style.css"> -->
+    <style>
+        @font-face {
+            font-family: PP mori;
+            src: url("/stylesheets/ppmori.woff2");
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: PP mori;
+            color: #fff;
+        }
+
+        html,
+        body {
+            height: 100%;
+            width: 100%;
+        }
+
+        #purple {
+            height: 100vh;
+            width: 100vw;
+            top: 0;
+            position: fixed;
+            z-index: 100;
+            background-color: #EDBFFF;
+            opacity: 0;
+            display: none;
+            transition: opacity ease 1s;
+
+        }
+
+        .cursor {
+            height: 45px;
+            width: 45px;
+            border-radius: 50%;
+            position: fixed;
+            background-color: #6b46c1;
+            z-index: 8;
+            transition: background-image ease 0.5s;
+            background-position: center;
+            background-size: cover;
+            mix-blend-mode: difference;
+        }
+
+        .main {
+            background-color: #0f0e0d;
+            cursor: none;
+        }
+
+        .page1 {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            z-index: 9;
+            padding-top: 12vw;
+        }
+
+
+        #nav {
+            height: 55px;
+            width: 100%;
+            /* background-color: red; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 30px;
+            position: fixed;
+            mix-blend-mode: difference;
+            z-index: 102;
+        }
+
+        #nav img {
+            height: 27px;
+        }
+
+        #nav-part2 {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        #nav #circle {
+            height: 18px;
+            width: 18px;
+            border-radius: 50%;
+            background-color: #fff;
+        }
+
+        #nav h4 {
+            font-size: 16px;
+            font-weight: 500;
+            text-transform: uppercase;
+
+        }
+
+        #nav h4:hover {
+            border-bottom: 1.5px solid #fff;
+
+        }
+
+        #nav h4:nth-child(1) {
+            border-bottom: 1.5px solid #fff;
+        }
+
+        .page1 h1 {
+            font-size: 8vw;
+            font-weight: 300;
+            font-family: PP mori;
+
+            margin-left: 6vw;
+            transform-origin: left;
+        }
+
+        .page1 h2 {
+            font-size: 8vw;
+            font-weight: 300;
+            transform-origin: left;
+
+            margin-left: 26vw;
+        }
+
+        .page1 video {
+            width: 60%;
+            margin-top: 10vw;
+            position: relative;
+            left: 50%;
+            transform: translate(-50%, 0);
+        }
+
+        .page2 {
+            min-height: 80vh;
+            width: 100%;
+            padding: 100px 5vw;
+            border-bottom: 2px solid #6c6c6c;
+            position: relative;
+            z-index: 9;
+        }
+
+        .page2 h1 {
+            font-size: 7vw;
+            font-weight: 500;
+            color: #111;
+
+        }
+
+        .page2-container {
+            height: 60vh;
+            width: 100%;
+            /* background-color: red; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            /* padding: 0 5vw; */
+        }
+
+        .page2-left {
+            /* background-color: blue; */
+            width: 40%;
+        }
+
+        .page2-right {
+            /* background-color: blue; */
+            width: 24%;
+        }
+
+        .page2-left h2 {
+            font-size: 4vw;
+            font-weight: 300;
+            color: #111;
+            line-height: 4vw;
+        }
+
+        .page2-right p {
+            font-size: 28px;
+            color: #111;
+        }
+
+        .page2-right button {
+            width: 100%;
+            border-radius: 50px;
+            border: none;
+            padding: 4px 0;
+            background-color: #EDBFFF;
+            color: #111;
+            margin-top: 20px;
+        }
+
+        .page3 {
+            min-height: 100vh;
+            width: 100%;
+            padding-top: 100px;
+            position: relative;
+            z-index: 9;
+        }
+
+        .page3 h1 {
+            font-size: 6.8vw;
+            font-weight: 300;
+            color: #111;
+            margin-left: 100px;
+        }
+
+        .page3-part1 {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+
+        }
+
+        .page3-part1 img {
+            height: 400px;
+            margin-top: 160px;
+        }
+
+        .page3-part1 video {
+            height: 400px;
+            margin-top: 40px;
+        }
+
+        .page4 {
+            min-height: 100vh;
+            width: 100%;
+            z-index: 9;
+            position: relative;
+            padding: 170px 100px;
+        }
+
+        .elem {
+            /* background-color: salmon; */
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+        }
+
+        .elem img {
+            position: absolute;
+            opacity: 0;
+            transition: all ease-out 0.5s;
+            transform: translateY(10%) rotate(2deg);
+        }
+
+        .elem img:nth-child(1) {
+            left: 2%;
+        }
+
+        .elem img:nth-child(3) {
+            right: 5%;
+        }
+
+        .text-div {
+            height: 16vh;
+            position: relative;
+            z-index: 9;
+            overflow: hidden;
+        }
+
+        .elem h1 {
+            font-size: 7.5vw;
+            font-weight: 600;
+            transition: all ease-out 0.5s;
+        }
+
+        .elem:hover h1 {
+            transform: translateY(-100%);
+            color: #EDBFFF;
+        }
+
+        .elem:hover img {
+            opacity: 1;
+            transform: translateY(0%) rotate(0deg);
+
+        }
+
+
+        .page5 {
+            min-height: 100vh;
+            width: 100%;
+            position: relative;
+            z-index: 9;
+            padding: 140px 100px;
+        }
+
+        .page5 h2 {
+            font-size: 4vw;
+            text-transform: uppercase;
+            font-weight: 400;
+            margin-bottom: 50px;
+        }
+
+        .box {
+            /* background-color: red; */
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 100px;
+            padding: 0 20px;
+            border-top: 2px solid #dadada;
+        }
+
+        .box:nth-last-child(1) {
+            border-bottom: 2px solid #dadada;
+
+        }
+
+
+        footer {
+            height: 90vh;
+            width: 100%;
+            background-color: #EDBFFF;
+            display: flex;
+            /* align-items: center; */
+            justify-content: center;
+
+        }
+
+        footer a {
+            /* padding: 30px; */
+            margin: 30px;
+            font-size: 7.5vw;
+            color: #6b46c1;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 100px;
+            height: auto;
+            
+        }
+        footer a:nth-child(1){
+            color: black;
+        }
+        footer a:nth-child(1):hover{
+            transform: translateX(3%) rotate(1deg);
+            text-shadow: 10px 5px #6b46c1 ;
+
+        }
+        footer a:nth-child(2):hover{
+            transform: translateX(3%) rotate(1deg);
+            text-shadow: 10px 5px #000000;
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="cursor"></div>
+    <div id="nav">
+        <img src="\images\logo.png"
+            alt="">
+        <div id="nav-part2">
+            <h4>Home</h4>
+            <!-- <h4>Work</h4> -->
+            <h4><a href="/login" style="text-decoration: none;">Login</a></h4>
+            <h4><a href="/index" style="text-decoration: none;">Sign Up</a></h4>
+        </div>
+        <div id="nav-part3">
+            <!-- <div id="circle"></div> -->
+        </div>
+    </div>
+    <div id="purple">
+
+    </div>
+    <div class="main">
+        <div class="page1">
+
+            <!-- <h1>Digitally crafted</h1> -->
+            <h1>Building digital friendships,</h1>
+            <!-- <h2>brand experiences</h2> -->
+            <h2>Multiple connection at a time</h2>
+            <video autoplay muted loop src="\images\production_id_4274798 (2160p).mp4"></video>
+        </div>
+        <div class="page2">
+            <h1>Join us at Ripple,</h1>
+            <div class="page2-container">
+                <div class="page2-left">
+                    <!-- <h2>A CREATIVE
+                        COLLECTIVE
+                        MADE TO UNLOCK
+                        YOUR BRAND’S
+                        POTENTIAL</h2> -->
+                    <h2>
+                        WHERE WE'RE
+                        CRAFTING FRIENDSHIPS
+                        AND DIGITAL
+                        ADVENTURES!</h2>
+                </div>
+                <div class="page2-right">
+                    <!-- <p>We weave together bold strategy and creative execution to produce thought-provoking digital
+                        experiences. We take a highly personalized approach to delivering branding, web design, and
+                        content marketing solutions. Born in the DC area - now serving clients worldwide.</p> -->
+                    <p>
+                        Join Ripple to connect with friends,
+                        family, and enthusiasts! Share passions,
+                        explore interests, and get inspired.
+                        Connect with like-minded people.
+                        Sign up today!</p>
+                    <button>About us</button>
+                </div>
+            </div>
+
+        </div>
+        <div class="page3">
+            <!-- <h1>Selected Works</h1> -->
+            <h1>Upload Your Photos</h1>
+            <div class="page3-part1">
+                <img src="https://d33wubrfki0l68.cloudfront.net/aa3d2ff66de5f16336bd94fd68c3c2ce61e29f68/d5064/assets/home/home-casestudy-mgny.webp"
+                    alt="">
+                <video autoplay loop muted
+                    src="https://d33wubrfki0l68.cloudfront.net/a13ea7c2ca2f38134748966280e54af4340ce821/f976d/assets/home/projects_madegood-reduced.mp4"></video>
+            </div>
+        </div>
+        <div class="page4">
+            <div class="elem">
+                <img src="/images/ezgif-1-cbf7415350.webp" alt="">
+                <div class="text-div">
+                    <h1>Posts</h1>
+                    <h1>Posts</h1>
+                </div>
+                <img src="/images/ezgif-1-ee4746f300.webp" alt="">
+            </div>
+            <div class="elem">
+                <img src="/images/ezgif-1-38a98f014a.webp" alt="">
+                <div class="text-div">
+                    <h1>Stories</h1>
+                    <h1>Stories</h1>
+                </div>
+                <img src="/images/ezgif-1-6a2c00efc2.webp" alt="">
+            </div>
+            <div class="elem">
+                <img src="/images/ezgif-2-e1d1ebd052.webp" alt="">
+                <div class="text-div">
+                    <h1>ChatRoom</h1>
+                    <h1>ChatRoom</h1>
+                </div>
+                <img src="/images/ezgif-1-daa3241c55.webp" alt="">
+            </div>
+
+        </div>
+        <div class="page5">
+            <h2>Types Of Users</h2>
+            <div class="box"
+                data-image="https://images.unsplash.com/photo-1608245449230-4ac19066d2d0?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <h3>Sports Athletes</h3>
+                <h4>3000</h4>
+            </div>
+            <div class="box"
+                data-image="https://images.unsplash.com/photo-1571193161738-deaba9b6cc26?q=80&w=1945&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <h3>Students</h3>
+                <h4>5500</h4>
+            </div>
+            <div class="box"
+                data-image="https://images.unsplash.com/photo-1586473219010-2ffc57b0d282?q=80&w=1964&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <h3>Jobers</h3>
+                <h4>1800</h4>
+            </div>
+            <div class="box"
+                data-image="https://images.unsplash.com/photo-1565383690591-1ee1b6582cef?q=80&w=1887&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <h3>Workers</h3>
+                <h4>5200</h4>
+            </div>
+            <div class="box"
+                data-image="https://images.unsplash.com/photo-1512236223251-742414148c3b?q=80&w=1974&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D">
+                <h3>Global Reach</h3>
+                <h4>25000</h4>
+            </div>
+        </div>
+        <footer>
+            <a href="/login">LOGIN</a>
+            <a href="/index">SIGN UP</a>
+
+        </footer>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/locomotive-scroll@3.5.4/dist/locomotive-scroll.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"
+        integrity="sha512-16esztaSRplJROstbIIdwX3N97V1+pZvV33ABoG1H2OyTttBxEGkTsoIVsiP1iaTtM8b3+hu2kB6pQ4Clr5yug=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"
+        integrity="sha512-Ic9xkERjyZ1xgJ5svx3y0u3xrvfT/uPkV99LBwe68xjy/mGtO+4eURHZBW2xW4SZbFrF1Tf090XqB+EVgXnVjw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- <script src="script.js"></script> -->
+    <script>
+        function init() {
+    gsap.registerPlugin(ScrollTrigger);
+
+    const locoScroll = new LocomotiveScroll({
+        el: document.querySelector(".main"),
+        smooth: true
+    });
+    locoScroll.on("scroll", ScrollTrigger.update);
+
+    ScrollTrigger.scrollerProxy(".main", {
+        scrollTop(value) {
+            return arguments.length ? locoScroll.scrollTo(value, 0, 0) : locoScroll.scroll.instance.scroll.y;
+        }, // we don't have to define a scrollLeft because we're only scrolling vertically.
+        getBoundingClientRect() {
+            return { top: 0, left: 0, width: window.innerWidth, height: window.innerHeight };
+        },
+        pinType: document.querySelector(".main").style.transform ? "transform" : "fixed"
+    });
+
+
+    ScrollTrigger.addEventListener("refresh", () => locoScroll.update());
+
+    ScrollTrigger.refresh();
+
+}
+
+init()
+
+var crsr = document.querySelector(".cursor")
+var main = document.querySelector(".main")
+document.addEventListener("mousemove",function(dets){
+    crsr.style.left = dets.x + 20+"px"
+    crsr.style.top = dets.y + 20+"px"
+})
+
+gsap.from(".page1 h1,.page1 h2", {
+    y: 10,
+    rotate: 10,
+    opacity: 0,
+    delay: 0.3,
+    duration: 0.7
+})
+var tl = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".page1 h1",
+        scroller: ".main",
+        // markers:true,
+        start: "top 27%",
+        end: "top 0",
+        scrub: 3
+    }
+})
+tl.to(".page1 h1", {
+    x: -100,
+}, "anim")
+tl.to(".page1 h2", {
+    x: 100
+}, "anim")
+tl.to(".page1 video", {
+    width: "90%"
+}, "anim")
+
+var tl2 = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".page1 h1",
+        scroller: ".main",
+        // markers:true,
+        start: "top -115%",
+        end: "top -120%",
+        scrub: 3
+    }
+})
+tl2.to(".main", {
+    backgroundColor: "#fff",
+})
+
+var tl3 = gsap.timeline({
+    scrollTrigger: {
+        trigger: ".page1 h1",
+        scroller: ".main",
+        // markers:true,
+        start: "top -280%",
+        end: "top -300%",
+        scrub: 3
+    }
+})
+
+tl3.to(".main",{
+    backgroundColor:"#0F0D0D"
+})
+
+
+var boxes = document.querySelectorAll(".box")
+boxes.forEach(function(elem){
+    elem.addEventListener("mouseenter",function(){
+        var att = elem.getAttribute("data-image")
+        crsr.style.width = "470px"
+        crsr.style.height = "370px"
+        crsr.style.borderRadius = "0"
+        crsr.style.backgroundImage = `url(${att})`
+    })
+    elem.addEventListener("mouseleave",function(){
+        elem.style.backgroundColor = "transparent"
+        crsr.style.width = "20px"
+        crsr.style.height = "20px"
+        crsr.style.borderRadius = "50%"
+        crsr.style.backgroundImage = `none`
+    })
+})
+
+// var h4 = document.querySelectorAll("#nav h4")
+// var purple = document.querySelector("#purple")
+// h4.forEach(function(elem){
+//     elem.addEventListener("mouseenter",function(){
+//         purple.style.display = "block"   
+//         purple.style.opacity = "1"
+//     })
+//     elem.addEventListener("mouseleave",function(){
+//         purple.style.display = "none"   
+//         purple.style.opacity = "0"
+//     })
+// })
+    </script>
+</body>
+
+</html>

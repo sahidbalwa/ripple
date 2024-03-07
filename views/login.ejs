@@ -1,0 +1,13 @@
+<% include ./partials/header.ejs %>
+   <div class="w-full min-h-screen bg-black text-white py-5 flex flex-col items-center justify-center">
+    <div class="flex flex-col items-center gap-5 px-4">
+      <img class="w-1/2" src="/images/logo.png" alt="">
+      <form class="w-full" action="/login" method="post">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-950 rounded-md block w-full bg-inherit" type="text" placeholder="username" name="username">
+        <input class="px-3 mt-2 py-2 border-2 border-zinc-950 rounded-md block w-full bg-inherit" type="password" placeholder="password" name="password">
+        <input class="w-full bg-purple-700 px-3 py-3 rounded-md mt-2" type="submit" value="Log In">
+      </form>
+      <span>Don't have an account ? <a href="/index" class="text-purple-500">Sign Up</a></span>
+    </div>
+  </div>
+<% include ./partials/footer.ejs %>

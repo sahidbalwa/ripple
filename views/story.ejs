@@ -1,0 +1,25 @@
+<% include ./partials/header.ejs %>
+<div class="flex justify-center items-center">
+<div class="stories parent mb-20 ">
+    <% stories.reverse().forEach(function(story){ %>
+        <div class="story mt-10 w-full min-h-[10vh]">
+            <div class="title px-4 flex items-center gap-2">
+                <div class="w-[9vw] h-[9vw] bg-sky-100 rounded-full overflow-hidden">
+                    <img class="w-full h-full object-cover" src="/images/uploads/<%= story.user.picture %>" alt="">
+                </div>
+                <h4 class="text-sm">
+                    <%= story.user.username %>
+                </h4>
+            </div>
+        </div>
+        <div class="relative rounded-[25px] w-full max-w-screen-sm h-96 mt-4 bg-sky-100 overflow-hidden">
+            <img data-postid="<%= story.id %>" class="postimg w-full h-full object-cover"
+              src="/images/uploads/<%= story.story %>" alt="">
+        </div>
+    <% }) %>
+    <h6 class="text-xs opacity-30">
+      
+      </h6>
+</div>
+</div>
+<% include ./partials/footer.ejs %>

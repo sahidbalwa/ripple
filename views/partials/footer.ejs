@@ -1,0 +1,55 @@
+<% if(footer){ %>
+  <div class="footer text-white flex justify-between items-center w-full fixed bottom-0 z-[10] bg-black px-10 py-3">
+    <a href="/feed"><i class="text-[1.4rem] ri-home-line"></i></a>
+    <a href="/search"><i class="text-[1.4rem] ri-search-line"></i></a>
+    <a href="/profile">
+      <div class="w-8 h-8 bg-zinc-300 rounded-full overflow-hidden">
+        <img class="w-full h-full object-cover" src="/images/uploads/<%= user.picture %>" alt="">
+      </div>
+    </a>
+    <a href="/upload"><i class="text-[1.4rem] ri-add-box-line"></i></a>
+    <a href="/setting"><i class="text-[1.4rem] ri-settings-fill"></i></a>
+
+  </div>
+  <% } %>
+
+
+
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function (event) {
+        var scrollpos = localStorage.getItem('scrollpos');
+        if (scrollpos) window.scrollTo(0, scrollpos);
+      });
+
+      window.onbeforeunload = function (e) {
+        localStorage.setItem('scrollpos', window.scrollY);
+      };
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"
+      integrity="sha512-7eHRwcbYkK4d9g/6tD/mhkf++eoTHwpNM9woBxtPUBWm67zeAfFC+HrdoE2GanKeocly/VxeLvIqwvCdk7qScg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"
+      integrity="sha512-onMTRKJBKz8M1TnqqDuGBlowlH0ohFzMXYRNebz+yOcc5TQr/zAKsthzhuv0hiyUKEiQEQXEynnXCvNTOk50dg=="
+      crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script>
+      // Show the loader
+      function showLoader() {
+        document.getElementById("loader").style.display = "block";
+      }
+
+      // Hide the loader
+      function hideLoader() {
+        document.getElementById("loader").style.display = "none";
+      }
+
+      // Listen for the "load" event to hide the loader once the page is loaded
+      window.addEventListener("load", function () {
+        hideLoader();
+      });
+
+    </script>
+    </body>
+
+    </html>
